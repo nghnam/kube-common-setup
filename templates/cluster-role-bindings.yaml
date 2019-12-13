@@ -1,0 +1,18 @@
+{{- range .Values.serviceAccounts }}
+{{- $saname := .name -}}
+{{- range .clusterRoleBindings }}
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ $saname }}-{{ .name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: {{ .kind }}
+  name: {{ .name }}
+subjects:
+- kind: ServiceAccount
+  name: {{ $saname }}
+  namespace: iam
+{{- end }}
+{{- end }}

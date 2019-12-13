@@ -1,0 +1,18 @@
+{{- range .Values.namespaces }}
+{{- if .quota }}
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resource-quota
+  namespace: {{ .name }}
+spec:
+  hard:
+    requests.cpu: {{ .quota.requests.cpu | default 1 | quote }}
+    requests.memory: {{ .quota.requests.memory | default "1Gi" }}
+    limits.cpu: {{ .quota.limits.cpu | default 2 | quote }}
+    limits.memory: {{ .quota.limits.memory | default "4Gi" }}
+    persistentvolumeclaims: {{ .quota.persistentVolumeClaims | default 5 | quote }}
+    requests.storage: {{ .quota.storage | default "10Gi" }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,14 @@
+{{- range .Values.namespaces }}
+{{- $ns := .name -}}
+{{- if .dockerconfigjson }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: regcred
+  namespace: {{ $ns }}
+data:
+  .dockerconfigjson: {{ .dockerconfigjson | b64enc }}
+type: kubernetes.io/dockerconfigjson
+{{- end }}
+{{- end }}

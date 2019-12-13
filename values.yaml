@@ -1,0 +1,65 @@
+privateRegCred: &privateRegCred |
+  {
+    "auths": {
+      "private-registry.local": {
+        "username": "admin",
+        "password": "private-registry-password"
+      }
+    }
+  }
+
+namespaces:
+  - name: iam # used to store all service accounts
+  - name: project-a
+    isolated: true
+    quota:
+      requests:
+        cpu: 1
+        memory: 1Gi
+        storage: 15Gi
+      limits:
+        cpu: 2
+        memory: 2Gi
+      persistentVolumeClaims: 5
+    dockerconfigjson: *privateRegCred
+  - name: project-b
+    isolated:
+    quota:
+      requests:
+        cpu: 
+        memory:
+        storage: 
+      limits:
+        cpu:
+        memory:
+      persistentVolumeClaims:
+    dockerconfigjson: |
+      {
+        "auths": {
+          "custom-registry.local": {
+            "username": "admin",
+            "password": "custom-registry-password"
+          }
+        }
+      }
+  - name: project-c
+
+serviceAccounts:
+  - name: namnh
+    namespace: iam
+    roleBindings:
+      - namespace: project-a
+        kind: ClusterRole
+        name: admin
+      - namespace: project-b
+        kind: ClusterRole
+        name: edit
+    clusterRoleBindings:
+      - kind: ClusterRole
+        name: namespace-reader
+  - name: gitlab-admin
+    namespace: kube-system
+    roleBindings:
+    clusterRoleBindings:
+      - kind: ClusterRole
+        name: cluster-admin
