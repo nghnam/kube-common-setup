@@ -10,6 +10,7 @@ privateRegCred: &privateRegCred |
 
 namespaces:
   - name: iam # used to store all service accounts
+  - name: istio-system
   - name: project-a
     isolated: true
     quota:
