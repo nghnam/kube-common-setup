@@ -4,4 +4,10 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: {{ .name }}
+  {{- if .labels }}
+  labels:
+    {{- range $key, $value := .labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
 {{- end }} 

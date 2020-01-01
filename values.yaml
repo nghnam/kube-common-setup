@@ -10,9 +10,11 @@ privateRegCred: &privateRegCred |
 
 namespaces:
   - name: iam # used to store all service accounts
-  - name: istio-system
+  - name: istio-system # used to install istio
   - name: project-a
     isolated: true
+    labels:
+      istio-injection: enabled
     quota:
       requests:
         cpu: 1
@@ -22,7 +24,6 @@ namespaces:
         cpu: 2
         memory: 2Gi
       persistentVolumeClaims: 5
-    dockerconfigjson: *privateRegCred
   - name: project-b
     isolated:
     quota:
