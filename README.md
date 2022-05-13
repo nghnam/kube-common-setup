@@ -33,3 +33,9 @@ $ helm upgrade common . [--dry-run]
 $ helm rollback common <revision> [--dry-run]
 ```
 
+# Author
+Nam Hoang Nguyen <nguyen.h.nam.vn@gmail.com>
+
+# License
+
+See [LICENSE](https://github.com/nghnam/kube-common-setup/blob/master/LICENSE)
